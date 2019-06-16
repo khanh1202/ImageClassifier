@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 # */AIPND-revision/intropyproject-classify-pet-images/check_images.py
 #
-# TODO 0: Add your information below for Programmer & Date Created.                                                                             
 # PROGRAMMER: Gia Khanh Dinh 
 # DATE CREATED: 16 June 2019                                
 # REVISED DATE: 
@@ -61,8 +60,6 @@ def main():
     # Function that checks Pet Images in the results Dictionary using results    
     check_creating_pet_image_labels(results)
 
-
-    # TODO 3: Define classify_images function within the file classiy_images.py
     # Once the classify_images function has been defined replace first 'None' 
     # in the function call with in_arg.dir and replace the last 'None' in the
     # function call with in_arg.arch  Once you have done the replacements your
@@ -84,7 +81,7 @@ def main():
     # Adjusts the results dictionary to determine if classifier correctly 
     # classified images as 'a dog' or 'not a dog'. This demonstrates if 
     # model can correctly classify dog images as dogs (regardless of breed)
-    adjust_results4_isadog(results, None)
+    adjust_results4_isadog(results, in_arg.dogfile)
 
     # Function that checks Results Dictionary for is-a-dog adjustment using results
     check_classifying_labels_as_dogs(results)

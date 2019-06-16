@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 # */AIPND-revision/intropyproject-classify-pet-images/calculates_results_stats.py
 #                                                                             
-# PROGRAMMER:
-# DATE CREATED:                                  
+# PROGRAMMER: Gia Khanh Dinh
+# DATE CREATED: 16 June 2019
 # REVISED DATE: 
 # PURPOSE: Create a function calculates_results_stats that calculates the 
 #          statistics of the results of the programrun using the classifier's model 
@@ -69,5 +69,51 @@ def calculates_results_stats(results_dic):
                      on how to calculate the counts and statistics.
     """        
     # Replace None with the results_stats_dic dictionary that you created with 
-    # this function 
-    return None
+    # this function
+    results_stats_dic = dict()
+    n_images = len(results_dic)
+    n_correctdog_matches = 0
+    n_dog_images = 0
+    n_correctnondog_matches = 0
+    n_notdog_images = 0
+    n_correctbreed_matches = 0
+    n_label_matches = 0
+
+    for filename in results_dic:
+        if results_dic[filename][3] == 1 and results_dic[filename][4] == 1:
+            n_correctdog_matches += 1
+        if results_dic[filename][3] == 1:
+            n_dog_images += 1
+        if results_dic[filename][3] == 0 and results_dic[filename][4] == 0:
+            n_correctnondog_matches += 1
+        if results_dic[filename][3] == 0:
+            n_notdog_images += 1
+        if results_dic[filename][3] == 1 and results_dic[filename][2] == 1:
+            n_correctbreed_matches += 1
+        if results_dic[filename][2] == 1:
+            n_label_matches += 1
+    if (n_dog_images == 0):
+        pct_correct_dog_images = 0
+        pct_correct_dog_breeds = 0
+    else:
+        pct_correct_dog_images = n_correctdog_matches/n_dog_images * 100
+        pct_correct_dog_breeds = n_correctbreed_matches/n_dog_images * 100
+
+    if (n_notdog_images == 0):
+        pct_correct_nondog_images = 0
+    else:
+        pct_correct_nondog_images = n_correctnondog_matches/n_notdog_images * 100
+
+    if (n_images == 0):
+        pct_label_matches = 0
+    else:
+        pct_label_matches = n_label_matches/n_images * 100
+
+    results_stats_dic["n_images"] = n_images
+    results_stats_dic["n_dogs_img"] = n_dog_images
+    results_stats_dic["n_notdogs_img"] = n_notdog_images
+    results_stats_dic["pct_correct_dogs"] = pct_correct_dog_images
+    results_stats_dic["pct_correct_notdogs"] = pct_correct_nondog_images
+    results_stats_dic["pct_correct_breed"] = pct_correct_dog_breeds
+    results_stats_dic["pct_label_matches"] = pct_label_matches
+    return results_stats_dic

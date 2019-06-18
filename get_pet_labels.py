@@ -18,6 +18,7 @@
 ##
 # Imports python modules
 from os import listdir
+from os.path import splitext
 
 def get_pet_labels(image_dir):
     """
@@ -42,17 +43,19 @@ def get_pet_labels(image_dir):
     filename_list = listdir(image_dir)
 
     for idx in range(0, len(filename_list), 1):
-        if filename_list[idx] not in results_dic:
-            pet_attributes = filename_list[idx].lower().split("_")
-            label = ""
-            for word in pet_attributes:
-                if word.isalpha():
-                    label += word + " "
-            label = label.strip()
-            results_dic[filename_list[idx]] = [label]
-        else:
-            print("** Warning: Key=", filename_list[idx],
-                  "already exists in results_dic with value =",
-                  results_dic[filename_list[idx]])
+        if not filename_list[idx].startswith("."):
+            if filename_list[idx] not in results_dic:
+                root = splitext(filename_list[idx])[0]
+                pet_attributes = root.lower().split("_")
+                label = ""
+                for word in pet_attributes:
+                    if word.isalpha():
+                        label += word + " "
+                label = label.strip()
+                results_dic[filename_list[idx]] = [label]
+            else:
+                print("** Warning: Key=", filename_list[idx],
+                      "already exists in results_dic with value =",
+                      results_dic[filename_list[idx]])
 
     return results_dic
